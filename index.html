@@ -1,957 +1,884 @@
 <!doctype html>
-<html lang="es">
+<html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Activismo Juvenil — Test de Perfil (3º ESO)</title>
-  <meta name="description" content="Encuesta visual para 3º ESO sobre implicación social con perfil final." />
-
+  <title>Youth Voice & Social Involvement — Profile Survey</title>
+  <meta name="description" content="A bright, teen-friendly survey that assigns students a social involvement profile." />
   <style>
     :root{
-      /* Light, colorful UI */
-      --bgA:#F7F7FF;
-      --bgB:#F1FBFF;
+      /* Bright, teen-friendly palette */
+      --bgA:#fff7ff;
+      --bgB:#f2fbff;
+      --ink:#10203a;
+      --muted:#506078;
+      --card: rgba(255,255,255,.88);
+      --card2: rgba(255,255,255,.72);
+      --stroke: rgba(16,32,58,.14);
+      --shadow: 0 18px 60px rgba(14,25,49,.12);
+      --shadow2: 0 10px 28px rgba(14,25,49,.10);
+      --radius: 18px;
+      --radius2: 26px;
+      --max: 980px;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
 
-      --card: rgba(255,255,255,.78);
-      --card2: rgba(255,255,255,.62);
-      --stroke: rgba(20,20,50,.12);
+      /* Accents */
+      --a1:#7c5cff;  /* violet */
+      --a2:#00c2ff;  /* cyan */
+      --a3:#16c172;  /* green */
+      --a4:#ffb800;  /* amber */
+      --a5:#ff5aa5;  /* pink */
 
-      --txt: rgba(10,10,25,.92);
-      --mut: rgba(10,10,25,.68);
-      --mut2: rgba(10,10,25,.48);
-
-      --shadow: 0 20px 60px rgba(10,20,40,.12);
-      --r1: 18px;
-      --r2: 26px;
-
-      /* Accent palette */
-      --p:#7C3AED;   /* purple */
-      --c:#06B6D4;   /* cyan */
-      --g:#10B981;   /* green */
-      --y:#F59E0B;   /* amber */
-      --pk:#F43F5E;  /* rose */
-      --o:#FB923C;   /* orange */
-      --b:#2563EB;   /* blue */
-
-      --focus: 0 0 0 4px rgba(6,182,212,.22);
+      --focus: 0 0 0 4px rgba(124,92,255,.20);
     }
 
     *{box-sizing:border-box}
     html,body{height:100%}
     body{
       margin:0;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
-      color: var(--txt);
+      font-family: var(--sans);
+      color: var(--ink);
+
+      /* Light + playful background with “stickers” */
       background:
-        radial-gradient(900px 520px at 10% 10%, rgba(124,58,237,.16), transparent 60%),
-        radial-gradient(900px 560px at 90% 20%, rgba(6,182,212,.16), transparent 60%),
-        radial-gradient(900px 650px at 55% 110%, rgba(244,63,94,.12), transparent 55%),
+        radial-gradient(900px 600px at 15% 10%, rgba(124,92,255,.18), transparent 60%),
+        radial-gradient(900px 600px at 85% 15%, rgba(0,194,255,.18), transparent 60%),
+        radial-gradient(900px 600px at 50% 120%, rgba(22,193,114,.16), transparent 60%),
         linear-gradient(180deg, var(--bgA), var(--bgB));
+
       overflow-x:hidden;
     }
 
-    /* floating confetti shapes */
-    .shape{
-      position: fixed;
-      width: 520px; height: 520px;
-      border-radius: 999px;
-      filter: blur(18px);
-      opacity: .55;
-      pointer-events:none;
-      animation: floaty 14s ease-in-out infinite;
-      mix-blend-mode: multiply;
-    }
-    .s1{left:-240px; top:-260px; background: radial-gradient(circle at 30% 30%, rgba(6,182,212,.35), rgba(124,58,237,.18), transparent 60%);}
-    .s2{right:-260px; top:30px; background: radial-gradient(circle at 30% 30%, rgba(244,63,94,.22), rgba(245,158,11,.20), transparent 62%); animation-duration: 18s;}
-    .s3{left: 32%; bottom:-330px; background: radial-gradient(circle at 30% 30%, rgba(16,185,129,.22), rgba(37,99,235,.18), transparent 62%); animation-duration: 20s;}
-    @keyframes floaty{
-      0%,100%{ transform: translate3d(0,0,0) scale(1); }
-      50%{ transform: translate3d(18px,-16px,0) scale(1.05); }
-    }
+    a{color:inherit}
 
     .wrap{
-      max-width: 1060px;
+      max-width: var(--max);
       margin: 0 auto;
-      padding: 26px 18px 90px;
-      position: relative;
-      z-index: 1;
+      padding: 26px 16px 84px;
+      position:relative;
     }
 
-    .top{
+    /* Decorative sticker layer */
+    .stickers{
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      z-index:-1;
+      overflow:hidden;
+    }
+    .st{
+      position:absolute;
+      opacity:.75;
+      filter: drop-shadow(0 10px 18px rgba(14,25,49,.10));
+      transform: rotate(var(--rot, 0deg));
+    }
+    .st svg{display:block}
+    .st1{left:2vw; top:10vh; --rot:-10deg}
+    .st2{right:3vw; top:14vh; --rot:12deg}
+    .st3{left:6vw; bottom:14vh; --rot:9deg}
+    .st4{right:8vw; bottom:10vh; --rot:-8deg}
+    @media (max-width: 760px){
+      .st{opacity:.55}
+      .st1{top:7vh}
+      .st2{top:9vh}
+    }
+
+    .topbar{
       display:flex;
+      align-items:center;
       justify-content:space-between;
-      align-items:center;
-      gap: 14px;
-      flex-wrap: wrap;
-      margin-bottom: 14px;
+      gap:14px;
+      margin: 6px 0 18px;
+      flex-wrap:wrap;
     }
 
-    .brand{
-      display:flex;
-      align-items:center;
-      gap: 12px;
-      padding: 10px 12px;
-      border: 1px solid var(--stroke);
-      border-radius: 999px;
-      background: linear-gradient(180deg, rgba(255,255,255,.85), rgba(255,255,255,.55));
-      box-shadow: 0 14px 40px rgba(10,20,40,.10);
-      backdrop-filter: blur(10px);
-    }
-
-    .logo{
-      width: 44px; height: 44px;
-      border-radius: 16px;
-      display:grid; place-items:center;
-      border: 1px solid rgba(20,20,50,.10);
-      background:
-        radial-gradient(circle at 30% 30%, rgba(6,182,212,.22), rgba(124,58,237,.18)),
-        linear-gradient(135deg, rgba(244,63,94,.12), rgba(16,185,129,.10));
-    }
-    .brand h1{margin:0;font-size:14px;letter-spacing:.2px}
-    .brand p{margin:0;font-size:12px;color:var(--mut2)}
-
-    .chip{
+    .badge{
       display:inline-flex;
       align-items:center;
-      gap: 10px;
-      padding: 10px 12px;
-      border-radius: 999px;
-      border: 1px solid var(--stroke);
-      background: rgba(255,255,255,.62);
-      color: var(--mut);
-      font-size: 12px;
-      box-shadow: 0 10px 26px rgba(10,20,40,.07);
-      white-space:nowrap;
-    }
-    .spark{
-      width: 10px; height: 10px;
-      border-radius: 50%;
-      background: radial-gradient(circle at 30% 30%, rgba(16,185,129,1), rgba(6,182,212,.7));
-      box-shadow: 0 0 0 5px rgba(16,185,129,.14);
-    }
-
-    .hero{
-      border: 1px solid var(--stroke);
-      border-radius: var(--r2);
-      background: linear-gradient(180deg, rgba(255,255,255,.85), rgba(255,255,255,.58));
-      box-shadow: var(--shadow);
-      backdrop-filter: blur(12px);
-      overflow:hidden;
-      position: relative;
-    }
-    .heroInner{
-      padding: 18px;
-      display:grid;
-      grid-template-columns: 1.2fr .8fr;
-      gap: 14px;
-      align-items:stretch;
-    }
-    @media (max-width: 900px){
-      .heroInner{grid-template-columns: 1fr;}
-    }
-
-    .hero h2{
-      margin:0 0 8px;
-      font-size: 28px;
-      letter-spacing: .2px;
-      line-height: 1.12;
-    }
-    .hero .sub{
-      margin:0 0 12px;
-      color: var(--mut);
-      line-height: 1.55;
-      font-size: 14.5px;
-    }
-
-    .pillRow{display:flex; flex-wrap:wrap; gap:8px; margin-top: 10px;}
-    .pill{
-      display:inline-flex; align-items:center; gap:8px;
-      padding: 8px 10px;
-      border-radius: 999px;
-      border:1px solid var(--stroke);
-      background: rgba(255,255,255,.60);
-      color: var(--mut);
-      font-size: 12px;
-    }
-
-    .mini{
-      border: 1px solid var(--stroke);
-      border-radius: var(--r1);
-      background: rgba(255,255,255,.66);
-      padding: 14px;
-      position: relative;
-      overflow:hidden;
-    }
-    .mini h3{margin:0 0 8px; font-size: 14px;}
-    .mini ul{margin:0; padding-left:18px; color: var(--mut); font-size: 12.8px; line-height: 1.55;}
-    .mini li{margin:6px 0;}
-    .mini .note{
-      margin-top: 10px;
-      padding: 10px 12px;
-      border-radius: 14px;
-      border: 1px dashed rgba(20,20,50,.16);
-      color: var(--mut2);
-      font-size: 12px;
-      background: rgba(255,255,255,.55);
-    }
-
-    /* cute illustration row */
-    .illusRow{
-      display:flex; flex-wrap:wrap; gap:10px;
-      align-items:center;
-      margin-top: 10px;
-    }
-    .illus{
-      display:flex; align-items:center; gap:10px;
-      border: 1px solid var(--stroke);
-      border-radius: 999px;
-      padding: 8px 10px;
-      background: rgba(255,255,255,.60);
-      color: var(--mut);
-      font-size: 12px;
-    }
-    .illus svg{display:block}
-
-    /* main card */
-    .card{
-      margin-top: 14px;
-      border: 1px solid var(--stroke);
-      border-radius: var(--r2);
-      background: linear-gradient(180deg, rgba(255,255,255,.82), rgba(255,255,255,.58));
-      box-shadow: var(--shadow);
-      backdrop-filter: blur(10px);
-      overflow:hidden;
-    }
-
-    .head{
-      padding: 14px 16px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap: 12px;
-      border-bottom: 1px solid rgba(20,20,50,.08);
-      background: linear-gradient(90deg, rgba(124,58,237,.08), rgba(6,182,212,.07), rgba(16,185,129,.06), rgba(245,158,11,.06));
-      flex-wrap: wrap;
-    }
-
-    .leftHead{display:flex; gap:10px; align-items:center; flex-wrap:wrap;}
-    .tag{
-      display:inline-flex; align-items:center; gap:8px;
-      padding: 8px 10px;
-      border-radius: 999px;
-      border: 1px solid rgba(20,20,50,.12);
-      background: rgba(255,255,255,.66);
-      color: var(--mut);
-      font-size: 12px;
-    }
-    .tag strong{color: rgba(10,10,25,.92); font-weight:900}
-
-    .prog{
-      display:flex; align-items:center; gap:10px;
-      min-width: 260px;
-    }
-    .bar{
-      flex:1;
-      height: 10px;
-      border-radius: 999px;
-      border: 1px solid rgba(20,20,50,.12);
-      background: rgba(255,255,255,.55);
-      overflow:hidden;
-    }
-    .fill{
-      height:100%;
-      width:0%;
-      border-radius: 999px;
-      background: linear-gradient(90deg, rgba(124,58,237,.90), rgba(6,182,212,.85), rgba(16,185,129,.85), rgba(245,158,11,.82), rgba(244,63,94,.78));
-      transition: width .35s ease;
-    }
-    .ptxt{font-size:12px; color: var(--mut); white-space:nowrap;}
-
-    .body{padding: 16px}
-
-    .qTitle{margin:0 0 10px; font-size: 18.5px; letter-spacing:.2px;}
-    .qHint{margin:0 0 14px; color: var(--mut); font-size: 13.6px; line-height: 1.50;}
-
-    .grid{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-    }
-    @media (max-width: 760px){ .grid{grid-template-columns: 1fr;} }
-
-    .opt{
-      display:flex;
-      gap: 12px;
-      padding: 12px;
-      border-radius: 18px;
-      border: 1px solid rgba(20,20,50,.12);
-      background: rgba(255,255,255,.66);
-      cursor: pointer;
-      user-select: none;
-      transition: transform .12s ease, box-shadow .12s ease, border-color .12s ease;
-      position: relative;
-      overflow:hidden;
-      min-height: 82px;
-      outline:none;
-    }
-    .opt:hover{
-      transform: translateY(-1px);
-      border-color: rgba(6,182,212,.35);
-      box-shadow: 0 12px 24px rgba(10,20,40,.10);
-    }
-    .opt:focus-visible{ box-shadow: var(--focus); }
-
-    .opt[data-selected="true"]{
-      border-color: rgba(124,58,237,.45);
-      background:
-        linear-gradient(180deg, rgba(124,58,237,.10), rgba(6,182,212,.08));
-      box-shadow: 0 0 0 3px rgba(124,58,237,.10) inset, 0 12px 28px rgba(10,20,40,.10);
-    }
-
-    .iconBox{
-      width: 52px; height: 52px;
-      border-radius: 18px;
-      display:grid; place-items:center;
-      border: 1px solid rgba(20,20,50,.10);
-      background:
-        radial-gradient(circle at 30% 30%, rgba(255,255,255,.95), rgba(255,255,255,.60));
-      flex: 0 0 auto;
-    }
-    .txt{min-width:0}
-    .txt strong{display:block; font-size: 14.2px}
-    .txt span{display:block; margin-top:3px; color: var(--mut); font-size: 13px; line-height: 1.35}
-
-    .btnRow{
-      margin-top: 14px;
-      display:flex;
-      justify-content:space-between;
       gap:10px;
-      flex-wrap: wrap;
+      padding: 10px 12px;
+      border: 1px solid var(--stroke);
+      border-radius: 999px;
+      background: linear-gradient(180deg, rgba(255,255,255,.92), rgba(255,255,255,.70));
+      box-shadow: var(--shadow2);
+      letter-spacing: .2px;
+      font-size: 13px;
+      color: var(--muted);
+      backdrop-filter: blur(8px);
     }
+    .badge strong{color: var(--ink); font-weight:800}
+    .badge .spark{
+      width:18px;height:18px;border-radius:6px;
+      display:grid;place-items:center;
+      background: conic-gradient(from 210deg, var(--a2), var(--a1), var(--a5), var(--a4), var(--a3), var(--a2));
+      color:white;
+      box-shadow: 0 10px 24px rgba(124,92,255,.18);
+    }
+
+    .toolbar{
+      display:flex; gap:10px; flex-wrap:wrap;
+    }
+
     .btn{
-      appearance:none;
-      border: 1px solid rgba(20,20,50,.12);
-      background: rgba(255,255,255,.70);
-      color: var(--txt);
+      cursor:pointer;
+      border: 1px solid var(--stroke);
+      background: rgba(255,255,255,.84);
+      color: var(--ink);
       padding: 10px 12px;
       border-radius: 14px;
-      cursor:pointer;
-      font-weight: 900;
-      font-size: 13px;
-      transition: transform .12s ease, box-shadow .12s ease, border-color .12s ease;
-      display:inline-flex; align-items:center; gap:10px;
+      font-weight: 780;
+      letter-spacing: .15px;
+      box-shadow: var(--shadow2);
+      transition: transform .06s ease, background .2s ease, border-color .2s ease, box-shadow .2s ease;
       user-select:none;
-      box-shadow: 0 10px 18px rgba(10,20,40,.06);
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
     }
     .btn:hover{
-      transform: translateY(-1px);
-      border-color: rgba(6,182,212,.35);
-      box-shadow: 0 14px 24px rgba(10,20,40,.10);
+      background: rgba(255,255,255,.96);
+      box-shadow: 0 14px 34px rgba(14,25,49,.12);
     }
-    .btn:disabled{ opacity: .45; cursor:not-allowed; transform:none; box-shadow:none; }
-    .primary{
-      border-color: rgba(124,58,237,.35);
-      background: linear-gradient(90deg, rgba(124,58,237,.20), rgba(6,182,212,.14));
+    .btn:active{transform: translateY(1px)}
+    .btn:focus{outline:none; box-shadow: var(--focus), var(--shadow2)}
+    .btn.primary{
+      border-color: rgba(124,92,255,.28);
+      background: linear-gradient(180deg, rgba(124,92,255,.16), rgba(124,92,255,.08));
     }
-    .danger{
-      border-color: rgba(244,63,94,.30);
-      background: rgba(244,63,94,.10);
+    .btn.danger{
+      border-color: rgba(255,90,165,.28);
+      background: linear-gradient(180deg, rgba(255,90,165,.10), rgba(255,90,165,.06));
+    }
+
+    header.hero{
+      position:relative;
+      border: 1px solid var(--stroke);
+      border-radius: var(--radius2);
+      padding: 22px 18px;
+      background:
+        radial-gradient(900px 500px at 18% 0%, rgba(124,92,255,.14), transparent 60%),
+        radial-gradient(900px 500px at 88% 10%, rgba(0,194,255,.14), transparent 60%),
+        linear-gradient(180deg, rgba(255,255,255,.90), rgba(255,255,255,.70));
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+
+    .hero:before{
+      content:"";
+      position:absolute;
+      inset:-2px;
+      background:
+        radial-gradient(600px 220px at 30% 15%, rgba(255,184,0,.20), transparent 60%),
+        radial-gradient(520px 240px at 78% 30%, rgba(255,90,165,.18), transparent 60%),
+        radial-gradient(650px 260px at 60% 120%, rgba(22,193,114,.16), transparent 60%);
+      filter: blur(2px);
+      pointer-events:none;
+    }
+    .hero > *{position:relative}
+
+    .hgrid{
+      display:grid;
+      grid-template-columns: 1.25fr .75fr;
+      gap: 16px;
+      align-items: start;
+    }
+    @media (max-width: 840px){
+      .hgrid{grid-template-columns: 1fr}
+    }
+
+    .titleRow{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap: 12px;
+      flex-wrap:wrap;
+    }
+
+    h1{
+      margin: 0 0 10px;
+      font-size: clamp(26px, 4.1vw, 40px);
+      letter-spacing: -0.7px;
+      line-height: 1.06;
+    }
+
+    .sub{
+      margin:0 0 14px;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.45;
+      max-width: 70ch;
+    }
+
+    /* little “hero illustration” */
+    .heroArt{
+      width: 140px;
+      height: 92px;
+      border-radius: 22px;
+      border: 1px solid rgba(16,32,58,.12);
+      background: linear-gradient(135deg, rgba(0,194,255,.14), rgba(124,92,255,.12), rgba(255,90,165,.10));
+      box-shadow: 0 14px 34px rgba(14,25,49,.10);
+      display:grid;
+      place-items:center;
+      position:relative;
+      overflow:hidden;
+    }
+    .heroArt:after{
+      content:"";
+      position:absolute; inset:-40px;
+      background:
+        radial-gradient(120px 120px at 30% 30%, rgba(255,255,255,.70), transparent 60%),
+        radial-gradient(160px 160px at 80% 60%, rgba(255,255,255,.55), transparent 60%);
+      transform: rotate(18deg);
+      opacity:.7;
+    }
+    .heroArt svg{position:relative; z-index:1}
+
+    .notes{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top: 10px;
+    }
+
+    .chip{
+      padding: 8px 10px;
+      border-radius: 999px;
+      border:1px solid rgba(16,32,58,.12);
+      background: rgba(255,255,255,.78);
+      color: var(--muted);
+      font-size: 13px;
+      display:inline-flex; align-items:center; gap:8px;
+      box-shadow: 0 10px 24px rgba(14,25,49,.06);
+    }
+
+    .miniCard{
+      border:1px solid rgba(16,32,58,.12);
+      background: rgba(255,255,255,.80);
+      border-radius: var(--radius);
+      padding: 14px 14px 12px;
+      box-shadow: var(--shadow2);
+    }
+    .miniTitle{
+      display:flex; align-items:center; justify-content:space-between; gap:10px;
+      font-weight: 900; letter-spacing: .2px;
+      margin-bottom: 8px;
+    }
+    .miniTitle span{color: var(--muted); font-weight: 750}
+    .miniText{color: var(--muted); font-size: 13px; line-height: 1.45; margin: 0 0 10px;}
+    .meter{
+      height: 12px;
+      border-radius: 999px;
+      background: rgba(16,32,58,.08);
+      border: 1px solid rgba(16,32,58,.10);
+      overflow:hidden;
+    }
+    .meter > div{
+      height:100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--a2), var(--a1), var(--a5), var(--a4));
+      transition: width .3s ease;
+    }
+
+    main{ margin-top: 16px; }
+
+    .panel{
+      border: 1px solid rgba(16,32,58,.12);
+      background: rgba(255,255,255,.76);
+      border-radius: var(--radius2);
+      padding: 18px;
+      box-shadow: var(--shadow);
     }
 
     .small{
-      margin-top: 10px;
-      color: var(--mut2);
-      font-size: 12.3px;
-      line-height: 1.55;
+      font-size: 13px;
+      color: var(--muted);
+      line-height:1.45;
     }
 
-    /* RESULTS */
-    .results{
+    .grid{
       display:grid;
-      grid-template-columns: 1.1fr .9fr;
+      grid-template-columns: 1fr;
       gap: 14px;
-    }
-    @media (max-width: 920px){ .results{grid-template-columns:1fr;} }
-
-    .profile{
-      border: 1px solid rgba(20,20,50,.12);
-      border-radius: var(--r2);
-      background: rgba(255,255,255,.72);
-      padding: 16px;
-      position: relative;
-      overflow:hidden;
+      margin-top: 14px;
     }
 
-    .profile::before{
-      content:"";
-      position:absolute; inset:-70px -70px auto auto;
-      width: 300px; height: 300px;
-      border-radius: 999px;
-      background: radial-gradient(circle at 30% 30%, rgba(6,182,212,.18), rgba(124,58,237,.14), transparent 70%);
-      pointer-events:none;
-    }
-
-    .pTop{display:flex; align-items:center; gap: 12px; position:relative; z-index:1;}
-    .avatar{
-      width: 68px; height: 68px;
-      border-radius: 22px;
-      border: 1px solid rgba(20,20,50,.10);
-      background:
-        radial-gradient(circle at 30% 30%, rgba(245,158,11,.22), rgba(244,63,94,.14)),
-        linear-gradient(135deg, rgba(6,182,212,.18), rgba(124,58,237,.14));
-      box-shadow: 0 16px 36px rgba(10,20,40,.12);
-      display:grid; place-items:center;
-      overflow:hidden;
-    }
-    .pTitle{margin:0; font-size: 18.2px;}
-    .pTag{margin:4px 0 0; color: var(--mut); font-size: 13px;}
-    .pBody{margin-top: 12px; color: var(--mut); line-height: 1.65; font-size: 13.8px; position:relative; z-index:1;}
-
-    .chips{display:flex; flex-wrap:wrap; gap:8px; margin-top: 12px; position:relative; z-index:1;}
-    .cchip{
-      padding: 8px 10px;
-      border-radius: 999px;
-      border: 1px solid rgba(20,20,50,.12);
-      background: rgba(255,255,255,.75);
-      font-size: 12.3px;
-      color: var(--mut);
-    }
-
-    .meters{
-      border: 1px solid rgba(20,20,50,.12);
-      border-radius: var(--r2);
-      background: rgba(255,255,255,.70);
+    .q{
+      border:1px solid rgba(16,32,58,.12);
+      background: rgba(255,255,255,.86);
+      border-radius: var(--radius);
       padding: 14px;
+      overflow:hidden;
+      box-shadow: 0 10px 24px rgba(14,25,49,.06);
+      position:relative;
     }
-    .meters h4{margin:0 0 10px; font-size: 14px;}
-    .rows{display:grid; gap: 10px;}
-    .row{display:grid; grid-template-columns: 140px 1fr 44px; gap: 10px; align-items:center;}
-    .lbl{font-size: 12px; color: var(--mut);}
-    .mbar{
-      height: 10px;
+
+    /* a tiny colored corner tape */
+    .q:before{
+      content:"";
+      position:absolute;
+      top:-10px; right:18px;
+      width: 56px; height: 22px;
       border-radius: 999px;
-      border: 1px solid rgba(20,20,50,.12);
-      background: rgba(255,255,255,.60);
+      background: linear-gradient(90deg, rgba(0,194,255,.55), rgba(124,92,255,.55), rgba(255,90,165,.55));
+      transform: rotate(6deg);
+      opacity:.55;
+    }
+
+    .qhead{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .qnum{
+      font-family: var(--mono);
+      font-size: 12px;
+      color: rgba(80,96,120,.95);
+      letter-spacing:.35px;
+      padding: 6px 8px;
+      border: 1px solid rgba(16,32,58,.12);
+      border-radius: 999px;
+      background: rgba(255,255,255,.70);
+      flex: 0 0 auto;
+      margin-top: 2px;
+    }
+
+    .qtext{
+      margin:0;
+      font-weight: 900;
+      letter-spacing: -.2px;
+      line-height:1.25;
+      font-size: 16px;
+    }
+
+    .qhint{
+      margin: 6px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    .options{
+      display:grid;
+      grid-template-columns: repeat(2, minmax(0,1fr));
+      gap: 10px;
+    }
+    @media (max-width: 640px){
+      .options{grid-template-columns: 1fr}
+    }
+
+    .opt{
+      position:relative;
+      display:flex;
+      align-items:flex-start;
+      gap: 10px;
+      padding: 12px 12px;
+      border-radius: 18px;
+      border: 1px solid rgba(16,32,58,.12);
+      background: rgba(255,255,255,.86);
+      cursor:pointer;
+      transition: transform .06s ease, background .2s ease, border-color .2s ease, box-shadow .2s ease;
+      user-select:none;
+      min-height: 60px;
+      box-shadow: 0 10px 22px rgba(14,25,49,.06);
+    }
+    .opt:hover{
+      background: rgba(255,255,255,.98);
+      border-color: rgba(124,92,255,.22);
+      box-shadow: 0 16px 34px rgba(14,25,49,.10);
+    }
+    .opt:active{transform: translateY(1px)}
+    .opt input{
+      appearance:none;
+      -webkit-appearance:none;
+      width: 16px;
+      height: 16px;
+      border-radius: 999px;
+      border: 2px solid rgba(16,32,58,.35);
+      margin-top: 2px;
+      flex: 0 0 auto;
+      position:relative;
+      background: rgba(255,255,255,.90);
+    }
+    .opt input:checked{
+      border-color: var(--a1);
+      box-shadow: 0 0 0 4px rgba(124,92,255,.18);
+    }
+    .opt input:checked:after{
+      content:"";
+      position:absolute;
+      inset: 3px;
+      border-radius:999px;
+      background: var(--a1);
+    }
+
+    .opt .olabel{
+      display:flex;
+      flex-direction:column;
+      gap: 2px;
+      min-width:0;
+    }
+    .opt .otitle{
+      font-weight: 900;
+      letter-spacing: -.1px;
+      font-size: 14px;
+      line-height:1.2;
+      color: var(--ink);
+      display:flex;
+      align-items:center;
+      gap:8px;
+    }
+    .opt .odesc{
+      font-size: 12.5px;
+      line-height:1.35;
+      color: var(--muted);
+    }
+
+    /* Option mini-icons (colored) */
+    .miniIco{
+      width: 22px; height: 22px;
+      border-radius: 8px;
+      display:grid; place-items:center;
+      border: 1px solid rgba(16,32,58,.12);
+      background: rgba(255,255,255,.90);
+      flex: 0 0 auto;
+    }
+
+    .bottomActions{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 12px;
+      flex-wrap:wrap;
+      margin-top: 16px;
+      padding-top: 12px;
+      border-top: 1px solid rgba(16,32,58,.12);
+    }
+
+    /* Results modal */
+    dialog{
+      width: min(900px, calc(100% - 22px));
+      border: 1px solid rgba(16,32,58,.14);
+      border-radius: 24px;
+      background:
+        radial-gradient(900px 500px at 18% 0%, rgba(124,92,255,.16), transparent 60%),
+        radial-gradient(900px 500px at 88% 10%, rgba(0,194,255,.16), transparent 60%),
+        linear-gradient(180deg, rgba(255,255,255,.92), rgba(255,255,255,.78));
+      color: var(--ink);
+      box-shadow: 0 22px 80px rgba(14,25,49,.18);
+      padding: 0;
       overflow:hidden;
     }
-    .mbar i{
-      display:block;
+    dialog::backdrop{
+      background: rgba(10,20,40,.28);
+      backdrop-filter: blur(6px);
+    }
+
+    .modalHead{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 14px;
+      padding: 16px 16px 10px;
+      border-bottom: 1px solid rgba(16,32,58,.12);
+    }
+    .modalHead h2{
+      margin:0;
+      font-size: 18px;
+      letter-spacing: -.2px;
+    }
+    .modalBody{ padding: 14px 16px 18px; }
+
+    .resultGrid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    @media (max-width: 760px){
+      .resultGrid{grid-template-columns:1fr}
+    }
+
+    .resultCard{
+      border:1px solid rgba(16,32,58,.12);
+      background: rgba(255,255,255,.86);
+      border-radius: 20px;
+      padding: 14px;
+      box-shadow: 0 10px 24px rgba(14,25,49,.08);
+      overflow:hidden;
+      position:relative;
+    }
+
+    .profileRow{
+      display:flex;
+      gap: 12px;
+      align-items:center;
+      margin-bottom: 10px;
+    }
+
+    .avatar{
+      width: 54px;
+      height: 54px;
+      border-radius: 18px;
+      border: 1px solid rgba(16,32,58,.12);
+      background: linear-gradient(135deg, rgba(0,194,255,.14), rgba(124,92,255,.12), rgba(255,90,165,.10));
+      display:grid;
+      place-items:center;
+      flex:0 0 auto;
+      color: var(--ink);
+    }
+
+    .pname{
+      margin:0;
+      font-size: 18px;
+      letter-spacing: -.3px;
+      font-weight: 950;
+      line-height:1.05;
+    }
+    .ptag{
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height:1.35;
+    }
+
+    .barWrap{
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px solid rgba(16,32,58,.10);
+    }
+    .barLine{
+      display:flex; align-items:center; justify-content:space-between; gap:10px;
+      margin-bottom: 6px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .bars{ display:grid; gap: 8px; margin-top: 8px; }
+
+    .bar{
+      height: 12px;
+      border-radius: 999px;
+      background: rgba(16,32,58,.08);
+      border: 1px solid rgba(16,32,58,.10);
+      overflow:hidden;
+    }
+    .bar > div{
       height:100%;
       width:0%;
-      border-radius:999px;
-      transition: width .45s ease;
+      background: linear-gradient(90deg, var(--a2), var(--a1), var(--a5), var(--a4));
+      transition: width .35s ease;
     }
-    .val{font-size: 12px; color: var(--mut); text-align:right;}
-    .printRow{display:flex; flex-wrap:wrap; gap:10px; margin-top:12px;}
 
-    /* print */
+    .callout{
+      margin-top: 12px;
+      border:1px dashed rgba(124,92,255,.35);
+      background: rgba(124,92,255,.08);
+      border-radius: 18px;
+      padding: 12px;
+      color: var(--muted);
+      line-height: 1.45;
+      font-size: 13px;
+    }
+
+    .twoCol{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 12px;
+    }
+    @media (max-width: 760px){ .twoCol{grid-template-columns:1fr} }
+
+    .list{
+      margin: 8px 0 0;
+      padding-left: 18px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .footerBtns{
+      display:flex;
+      align-items:center;
+      justify-content:flex-end;
+      gap: 10px;
+      padding: 12px 16px 16px;
+      border-top: 1px solid rgba(16,32,58,.12);
+      flex-wrap:wrap;
+    }
+
+    /* Print styles */
     @media print{
-      body{ background:white; color:black; }
-      .shape,.top,.hero,.btnRow,.small,.printRow{ display:none !important; }
-      .card{ box-shadow:none; border:1px solid #ccc; background:white; }
-      .profile, .meters{ border:1px solid #ccc; background:white; }
+      body{background:white; color:black}
+      .topbar, .toolbar, .btn, .meter, dialog, .stickers{display:none !important}
+      header.hero, .panel, .q{box-shadow:none; background:white; border:1px solid #ddd}
+      .opt{border:1px solid #ddd; background:white; box-shadow:none}
+      .opt input{border-color:#333}
+      .wrap{max-width: 900px}
     }
   </style>
 </head>
 
 <body>
-  <div class="shape s1"></div>
-  <div class="shape s2"></div>
-  <div class="shape s3"></div>
-
-  <div class="wrap">
-    <div class="top">
-      <div class="brand">
-        <div class="logo" aria-hidden="true">
-          <!-- megáfono (dibujo) -->
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-            <path d="M4 11v2a3 3 0 0 0 3 3h2l2 4h2l-1.2-4.8L20 16V8l-6.2 1.8L14 5h-2l-2 4H7a3 3 0 0 0-3 3Z"
-              stroke="rgba(10,10,25,.85)" stroke-width="1.7" stroke-linejoin="round"/>
-            <path d="M20 8v8" stroke="rgba(6,182,212,.95)" stroke-width="2" stroke-linecap="round"/>
-          </svg>
-        </div>
-        <div>
-          <h1>Activismo Juvenil</h1>
-          <p>Test de perfil • 3º ESO</p>
-        </div>
-      </div>
-
-      <div class="chip">
-        <span class="spark"></span>
-        6–8 minutos • Sin respuestas “buenas/malas”
-      </div>
+  <!-- Decorative background stickers (inline SVG “drawings”) -->
+  <div class="stickers" aria-hidden="true">
+    <div class="st st1">
+      <svg width="150" height="150" viewBox="0 0 150 150" fill="none">
+        <path d="M26 80c20-42 52-58 96-48" stroke="rgba(124,92,255,.55)" stroke-width="10" stroke-linecap="round"/>
+        <path d="M44 112c30-34 66-44 92-26" stroke="rgba(0,194,255,.55)" stroke-width="10" stroke-linecap="round"/>
+        <path d="M30 46l18 6-10 16-18-6 10-16z" fill="rgba(255,90,165,.35)"/>
+      </svg>
     </div>
-
-    <section class="hero" aria-label="Introducción">
-      <div class="heroInner">
-        <div>
-          <h2>¿Cómo participas cuando algo importa?</h2>
-          <p class="sub">
-            Responde situaciones reales del instituto y redes. Al final tendrás un <strong>perfil</strong> con puntos fuertes
-            y una idea concreta para tu “siguiente paso”.
-          </p>
-
-          <div class="pillRow">
-            <span class="pill">🎨 Visual y moderno</span>
-            <span class="pill">⚡ Rápido</span>
-            <span class="pill">🧠 Reflexivo</span>
-            <span class="pill">🗣️ Debate final opcional</span>
-          </div>
-
-          <div class="illusRow" aria-label="Dibujos">
-            <span class="illus">${inlineBadge("VOZ","--c")}</span>
-            <span class="illus">${inlineBadge("INFO","--y")}</span>
-            <span class="illus">${inlineBadge("ACCIÓN","--g")}</span>
-            <span class="illus">${inlineBadge("LIDERAZGO","--p")}</span>
-            <span class="illus">${inlineBadge("CUIDADO","--pk")}</span>
-          </div>
-        </div>
-
-        <div class="mini">
-          <h3>Cómo usarlo en clase</h3>
-          <ul>
-            <li>Individual (móvil/Chromebook) o proyectado.</li>
-            <li>Al final: captura de pantalla del perfil.</li>
-            <li>Mini-reflexión: “Hoy soy… Mañana puedo…”</li>
-          </ul>
-          <div class="note">Privacidad: no se guardan datos. Todo queda en este dispositivo.</div>
-        </div>
-      </div>
-    </section>
-
-    <section class="card" id="surveyCard" role="region" aria-label="Encuesta">
-      <div class="head">
-        <div class="leftHead">
-          <span class="tag"><strong id="qLabel">Pregunta</strong></span>
-          <span class="tag" id="topicTag">Tema</span>
-        </div>
-
-        <div class="prog" aria-label="Progreso">
-          <div class="bar" aria-hidden="true"><div class="fill" id="fill"></div></div>
-          <div class="ptxt" id="ptxt">0 / 0</div>
-        </div>
-      </div>
-
-      <div class="body" id="body"></div>
-    </section>
-
-    <section class="card" id="resultCard" style="display:none" role="region" aria-label="Resultados">
-      <div class="head">
-        <div class="leftHead">
-          <span class="tag"><strong>Tu perfil</strong></span>
-          <span class="tag">Resultado</span>
-        </div>
-        <div class="prog"><div class="ptxt">Completado</div></div>
-      </div>
-
-      <div class="body" id="resultBody"></div>
-    </section>
-
-    <div class="small">
-      Consejo: si quieres cambiar preguntas, edita el bloque <code>QUESTIONS</code> dentro de este mismo archivo.
+    <div class="st st2">
+      <svg width="170" height="150" viewBox="0 0 170 150" fill="none">
+        <path d="M20 80c10-30 40-52 74-52 34 0 63 22 74 52" stroke="rgba(255,184,0,.45)" stroke-width="10" stroke-linecap="round"/>
+        <path d="M38 96c18 22 38 32 56 32 18 0 38-10 56-32" stroke="rgba(22,193,114,.45)" stroke-width="10" stroke-linecap="round"/>
+        <circle cx="128" cy="46" r="10" fill="rgba(124,92,255,.30)"/>
+      </svg>
+    </div>
+    <div class="st st3">
+      <svg width="170" height="160" viewBox="0 0 170 160" fill="none">
+        <path d="M26 124c0-42 34-76 76-76s76 34 76 76" stroke="rgba(0,194,255,.45)" stroke-width="10" stroke-linecap="round"/>
+        <path d="M54 120c0-28 23-50 50-50s50 22 50 50" stroke="rgba(124,92,255,.45)" stroke-width="10" stroke-linecap="round"/>
+        <path d="M26 124h124" stroke="rgba(255,90,165,.35)" stroke-width="10" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <div class="st st4">
+      <svg width="160" height="160" viewBox="0 0 160 160" fill="none">
+        <path d="M30 40h100v80H30z" stroke="rgba(124,92,255,.40)" stroke-width="10" stroke-linejoin="round"/>
+        <path d="M46 66h68M46 90h52" stroke="rgba(0,194,255,.50)" stroke-width="10" stroke-linecap="round"/>
+        <path d="M86 28l14 18-14 18-14-18 14-18z" fill="rgba(255,184,0,.35)"/>
+      </svg>
     </div>
   </div>
 
+  <div class="wrap">
+    <div class="topbar">
+      <div class="badge" title="Classroom-friendly survey">
+        <div class="spark" aria-hidden="true">
+          <!-- small sparkle icon -->
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
+            <path d="M12 2l2.2 7.1L22 12l-7.8 2.9L12 22l-2.2-7.1L2 12l7.8-2.9L12 2z" fill="white" opacity=".95"/>
+          </svg>
+        </div>
+        <strong>Youth Voice Survey</strong> <span>— Profile at the end</span>
+      </div>
+
+      <div class="toolbar">
+        <button class="btn" id="btnAutofill" type="button" title="Fill randomly for demo/testing">
+          <span aria-hidden="true">🎲</span> Demo fill
+        </button>
+        <button class="btn danger" id="btnReset" type="button" title="Clear all answers">
+          <span aria-hidden="true">🧼</span> Reset
+        </button>
+        <button class="btn primary" id="btnResults" type="button">
+          <span aria-hidden="true">✨</span> See my profile
+        </button>
+      </div>
+    </div>
+
+    <header class="hero">
+      <div class="hgrid">
+        <div>
+          <div class="titleRow">
+            <div style="min-width:0">
+              <h1>How do you make a difference?</h1>
+              <p class="sub">
+                This survey helps you discover your <strong>Social Involvement Profile</strong>.
+                Every profile matters—real change needs different strengths working together.
+              </p>
+            </div>
+
+            <div class="heroArt" aria-hidden="true" title="A little doodle for the vibes">
+              <svg width="96" height="64" viewBox="0 0 96 64" fill="none">
+                <path d="M10 50c10-18 22-26 38-26 16 0 28 8 38 26" stroke="rgba(16,32,58,.85)" stroke-width="3.5" stroke-linecap="round"/>
+                <path d="M24 34l6 6 10-12" stroke="rgba(16,32,58,.85)" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <circle cx="70" cy="20" r="6" fill="rgba(255,255,255,.85)"/>
+                <circle cx="70" cy="20" r="6" stroke="rgba(16,32,58,.35)" stroke-width="2"/>
+              </svg>
+            </div>
+          </div>
+
+          <div class="notes">
+            <div class="chip" title="Takes about 5 minutes">
+              <span aria-hidden="true">⏱️</span> 5–7 minutes
+            </div>
+            <div class="chip" title="No right or wrong">
+              <span aria-hidden="true">💬</span> No right/wrong answers
+            </div>
+            <div class="chip" title="Works on paper or digital">
+              <span aria-hidden="true">🧠</span> Classroom-friendly
+            </div>
+          </div>
+        </div>
+
+        <div class="miniCard">
+          <div class="miniTitle">
+            <span>Progress</span>
+            <strong id="progressText">0 / 10</strong>
+          </div>
+          <p class="miniText">Answer all questions for the most accurate profile.</p>
+          <div class="meter" aria-label="Progress">
+            <div id="progressBar"></div>
+          </div>
+          <p class="miniText" style="margin-top:10px">
+            Tip: If you tie between profiles, you’ll get a “blend” and can choose what fits best.
+          </p>
+        </div>
+      </div>
+    </header>
+
+    <main class="panel" aria-label="Survey">
+      <div class="small">
+        Choose one option per question. This survey sorts answers into 4 profiles:
+        <strong>Voice</strong>, <strong>Supporter</strong>, <strong>Doer</strong>, <strong>Thinker</strong>.
+      </div>
+
+      <div class="grid" id="questions"></div>
+
+      <div class="bottomActions">
+        <div class="small">
+          <strong>Privacy note:</strong> answers stay on this device unless you copy/share them.
+        </div>
+        <div style="display:flex; gap:10px; flex-wrap:wrap">
+          <button class="btn" type="button" id="btnPrint"><span aria-hidden="true">🖨️</span> Print</button>
+          <button class="btn primary" type="button" id="btnResults2"><span aria-hidden="true">✨</span> See my profile</button>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <dialog id="resultDialog" aria-label="Results">
+    <div class="modalHead">
+      <h2>Your Social Involvement Profile</h2>
+      <button class="btn" type="button" id="btnClose"><span aria-hidden="true">✖</span> Close</button>
+    </div>
+    <div class="modalBody">
+      <div class="resultGrid">
+        <div class="resultCard" id="primaryCard"></div>
+        <div class="resultCard">
+          <div class="profileRow">
+            <div class="avatar" aria-hidden="true" id="blendIcon"></div>
+            <div>
+              <p class="pname" style="margin:0">Your score breakdown</p>
+              <p class="ptag" id="scoreLine">—</p>
+            </div>
+          </div>
+
+          <div class="bars" aria-label="Score bars">
+            <div>
+              <div class="barLine"><span>Voice</span><span id="vScore">0</span></div>
+              <div class="bar"><div id="vBar"></div></div>
+            </div>
+            <div>
+              <div class="barLine"><span>Supporter</span><span id="sScore">0</span></div>
+              <div class="bar"><div id="sBar"></div></div>
+            </div>
+            <div>
+              <div class="barLine"><span>Doer</span><span id="dScore">0</span></div>
+              <div class="bar"><div id="dBar"></div></div>
+            </div>
+            <div>
+              <div class="barLine"><span>Thinker</span><span id="tScore">0</span></div>
+              <div class="bar"><div id="tBar"></div></div>
+            </div>
+          </div>
+
+          <div class="callout" id="tieNote">
+            If two profiles are tied, that’s normal. It means you have strengths in more than one role.
+          </div>
+        </div>
+      </div>
+
+      <div class="twoCol">
+        <div class="resultCard" id="teamTips"></div>
+        <div class="resultCard" id="nextStep"></div>
+      </div>
+    </div>
+
+    <div class="footerBtns">
+      <button class="btn" type="button" id="btnCopy"><span aria-hidden="true">📋</span> Copy results text</button>
+      <button class="btn primary" type="button" id="btnPrintResult"><span aria-hidden="true">🖨️</span> Print results</button>
+    </div>
+  </dialog>
+
   <script>
-    /******************** Inline badge drawings (SVG) ********************/
-    function inlineBadge(text, cssVar){
-      const col = getComputedStyle(document.documentElement).getPropertyValue(cssVar).trim() || "#06B6D4";
-      return `
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-          <path d="M12 2l2.7 6.2L21 9l-5 4.2L17.4 20 12 16.8 6.6 20 8 13.2 3 9l6.3-.8L12 2z"
-            stroke="${col}" stroke-width="2" stroke-linejoin="round"/>
+    // --- Inline "pics": each profile has an SVG avatar (no external files needed) ---
+    const icons = {
+      Voice: `
+        <svg width="34" height="34" viewBox="0 0 64 64" fill="none" aria-hidden="true">
+          <path d="M18 28c0-8 6-14 14-14s14 6 14 14v8c0 8-6 14-14 14s-14-6-14-14v-8z" stroke="currentColor" stroke-width="2"/>
+          <path d="M18 34H10c-4 0-6 3-6 6v4h10" stroke="currentColor" stroke-width="2" opacity=".85"/>
+          <path d="M46 34h8c4 0 6 3 6 6v4H50" stroke="currentColor" stroke-width="2" opacity=".85"/>
+          <path d="M24 52c2 3 5 5 8 5s6-2 8-5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <path d="M26 28h12" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity=".9"/>
+          <path d="M22 22l-8-6M42 22l8-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity=".7"/>
         </svg>
-        ${escapeHtml(text)}
-      `;
-    }
-
-    function escapeHtml(s){
-      return String(s ?? "")
-        .replaceAll("&","&amp;")
-        .replaceAll("<","&lt;")
-        .replaceAll(">","&gt;")
-        .replaceAll('"',"&quot;")
-        .replaceAll("'","&#039;");
-    }
-
-    /******************** CONFIG (CONSERVA CONTENIDO) ********************/
-    const DIMENSIONS = [
-      { key:"voz",     label:"Voz",        grad:"linear-gradient(90deg, rgba(6,182,212,.95), rgba(124,58,237,.55))" },
-      { key:"accion",  label:"Acción",     grad:"linear-gradient(90deg, rgba(16,185,129,.95), rgba(6,182,212,.45))" },
-      { key:"cuidado", label:"Cuidado",    grad:"linear-gradient(90deg, rgba(244,63,94,.95), rgba(245,158,11,.35))" },
-      { key:"lider",   label:"Liderazgo",  grad:"linear-gradient(90deg, rgba(124,58,237,.95), rgba(244,63,94,.45))" },
-      { key:"info",    label:"Info",       grad:"linear-gradient(90deg, rgba(245,158,11,.95), rgba(6,182,212,.35))" },
-    ];
-
-    // Small icon set (SVG drawings) for options
-    const ICONS = {
-      mic:  svgIcon("M12 2a3 3 0 0 1 3 3v6a3 3 0 0 1-6 0V5a3 3 0 0 1 3-3z","M19 11a7 7 0 0 1-14 0","M12 18v4","M8 22h8"),
-      bolt: svgIcon("M13 2L3 14h7l-1 8 12-14h-7l-1-6Z"),
-      heart:svgIcon("M12 21s-7-4.6-9.2-9C1.2 8.7 3.2 6 6.2 6c1.7 0 3 .8 3.8 2 0 0 .9-2 3.9-2 3 0 5 2.7 3.4 6-2.2 4.4-9.2 9-9.2 9Z"),
-      search:svgIcon("M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15Z","M16.2 16.2 21 21"),
-      flag: svgIcon("M5 3v18","M5 4h11l-1.5 3L16 10H5"),
-      tools:svgIcon("M14 7l3 3-7.5 7.5H6.5V14.5L14 7Z","M13 6l2-2 5 5-2 2"),
-      chat: svgIcon("M7 8h10","M7 12h7","M21 12a8 8 0 0 1-8 8H8l-5 3 1.4-4.2A8 8 0 1 1 21 12Z"),
+      `,
+      Supporter: `
+        <svg width="34" height="34" viewBox="0 0 64 64" fill="none" aria-hidden="true">
+          <path d="M32 56s-18-10-18-28c0-7 6-12 13-12 3 0 6 1 8 4 2-3 5-4 8-4 7 0 13 5 13 12 0 18-18 28-18 28z" stroke="currentColor" stroke-width="2"/>
+          <path d="M22 30c3 1 6 1 10-3M42 30c-3 1-6 1-10-3" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity=".85"/>
+          <path d="M24 40c2 3 5 5 8 5s6-2 8-5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      `,
+      Doer: `
+        <svg width="34" height="34" viewBox="0 0 64 64" fill="none" aria-hidden="true">
+          <path d="M22 50h20l6-22H16l6 22z" stroke="currentColor" stroke-width="2"/>
+          <path d="M20 28l-4-8h32l-4 8" stroke="currentColor" stroke-width="2" opacity=".9"/>
+          <path d="M26 34h12M26 40h12" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity=".85"/>
+          <path d="M10 50h44" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity=".7"/>
+        </svg>
+      `,
+      Thinker: `
+        <svg width="34" height="34" viewBox="0 0 64 64" fill="none" aria-hidden="true">
+          <path d="M24 50h16v-6c5-3 8-8 8-14 0-9-7-16-16-16S16 21 16 30c0 6 3 11 8 14v6z" stroke="currentColor" stroke-width="2"/>
+          <path d="M26 56h12" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity=".8"/>
+          <path d="M26 30h12" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity=".9"/>
+          <path d="M28 24h8" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity=".65"/>
+        </svg>
+      `
     };
 
-    function svgIcon(...paths){
-      const p = paths.map(d => `<path d="${d}" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path>`).join("");
-      return `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">${p}</svg>`;
-    }
-
-    /* ==== MISMO CONTENIDO (6 preguntas 3º ESO) ==== */
-    const QUESTIONS = [
-      {
-        topic: "Instituto",
-        title: "Ves un comentario ofensivo hacia alguien en clase. ¿Qué haces primero?",
-        hint: "Tu primera reacción, sin pensar demasiado.",
-        options: [
-          { icon:"mic",  title:"Lo paro con respeto", desc:"Digo algo tipo: “Eso no va”, sin montar show.", pts:{ voz:2, lider:1 } },
-          { icon:"heart",title:"Me acerco a la persona", desc:"Le pregunto si está bien y le apoyo.", pts:{ cuidado:2, voz:1 } },
-          { icon:"chat", title:"Lo hablo después", desc:"Busco el momento para hablar con calma.", pts:{ voz:2, info:1 } },
-          { icon:"bolt", title:"Pido ayuda ya", desc:"Aviso a un adulto si la situación es grave.", pts:{ accion:2, lider:1 } },
-        ]
-      },
-      {
-        topic: "Redes",
-        title: "Te llega un vídeo “viral” sobre un tema social. ¿Qué haces?",
-        hint: "Piensa en TikTok/IG/YouTube.",
-        options: [
-          { icon:"search",title:"Compruebo si es real", desc:"Busco fuentes antes de compartir.", pts:{ info:2, voz:1 } },
-          { icon:"mic",  title:"Comento con cabeza", desc:"Intento aportar algo útil y respetuoso.", pts:{ voz:2, cuidado:1 } },
-          { icon:"flag", title:"Lo reporto si hace daño", desc:"Uso herramientas si hay acoso/odio.", pts:{ accion:1, info:1 } },
-          { icon:"bolt", title:"Hago un contra-mensaje", desc:"Creo un post/reel con otra mirada.", pts:{ lider:2, voz:1 } },
-        ]
-      },
-      {
-        topic: "Participación",
-        title: "Si te piden ayudar en una actividad del centro, tú…",
-        hint: "Elige lo que más se parece a ti.",
-        options: [
-          { icon:"tools",title:"Me encargo de la parte práctica", desc:"Montaje, logística, materiales.", pts:{ accion:2, lider:1 } },
-          { icon:"mic",  title:"Me encargo de difundir", desc:"Carteles, redes, presentaciones.", pts:{ voz:2, info:1 } },
-          { icon:"heart",title:"Me encargo de que nadie quede fuera", desc:"Bienvenida, apoyo, ambiente.", pts:{ cuidado:2, voz:1 } },
-          { icon:"search",title:"Me encargo de investigar", desc:"Datos, ideas, propuestas realistas.", pts:{ info:2, accion:1 } },
-        ]
-      },
-      {
-        topic: "Conflicto",
-        title: "Tu grupo discute y nadie se entiende. ¿Qué haces tú?",
-        hint: "En trabajos o debates.",
-        options: [
-          { icon:"chat", title:"Ordeno turnos para hablar", desc:"Que todos puedan decir algo.", pts:{ voz:2, cuidado:1 } },
-          { icon:"tools",title:"Divido tareas claras", desc:"Roles simples para avanzar.", pts:{ accion:2, lider:1 } },
-          { icon:"search",title:"Pido evidencias", desc:"¿Qué datos tenemos? ¿Qué funciona?", pts:{ info:2 } },
-          { icon:"bolt", title:"Decido y tiro", desc:"Propongo un plan y lo lanzo.", pts:{ lider:2, accion:1 } },
-        ]
-      },
-      {
-        topic: "Impacto",
-        title: "¿Qué proyecto te motiva más ahora mismo?",
-        hint: "El que más te apetece probar.",
-        options: [
-          { icon:"tools",title:"Mejorar algo del centro", desc:"Reciclaje, limpieza, mural, patio.", pts:{ accion:2, lider:1 } },
-          { icon:"mic",  title:"Campaña creativa", desc:"Vídeo/cómic/posters sobre un tema.", pts:{ voz:2, info:1 } },
-          { icon:"heart",title:"Red de apoyo", desc:"Bienvenida, mediación, compañerismo.", pts:{ cuidado:2, voz:1 } },
-          { icon:"search",title:"Investigar y proponer", desc:"Encuesta, datos, soluciones realistas.", pts:{ info:2, accion:1 } },
-        ]
-      },
-      {
-        topic: "Tu siguiente paso",
-        title: "Cuando algo me da miedo o pereza, lo que más me ayuda es…",
-        hint: "Sé honesto/a, esto es para crecer.",
-        options: [
-          { icon:"heart",title:"Tener a alguien conmigo", desc:"Con apoyo, me atrevo.", pts:{ cuidado:1, lider:1 } },
-          { icon:"search",title:"Saber exactamente qué hacer", desc:"Un paso pequeño y claro.", pts:{ info:2 } },
-          { icon:"tools",title:"Ver resultados rápido", desc:"Me motiva notar impacto.", pts:{ accion:2 } },
-          { icon:"bolt", title:"Sentir que importa", desc:"Si tiene sentido, me muevo.", pts:{ lider:2, voz:1 } },
-        ]
-      }
-    ];
-
-    /* ==== MISMO CONTENIDO (perfiles) ==== */
-    const PROFILES = [
-      {
-        id:"La Voz que Activa",
-        emoji:"🎤",
-        tag:"Conectas gente con ideas. Tu fuerza es comunicar sin destruir.",
-        match: s => topKey(s)==="voz",
-        desc:"Te sale hablar, explicar, defender y crear cultura. Cuando lo haces bien, abres puertas. Tu reto: que tus palabras terminen en acción concreta.",
-        strengths:["Comunicas con impacto","Das voz a otros","Sabes debatir"],
-        next:["Convierte tu mensaje en una acción (mini reto semanal)","Antes de compartir: verifica 1 fuente","Practica “discrepar sin atacar”"],
-      },
-      {
-        id:"La Persona de Acción",
-        emoji:"🛠️",
-        tag:"Haces que las cosas pasen. Tu fuerza es lo práctico.",
-        match: s => topKey(s)==="accion",
-        desc:"Te va la logística, el “vamos a hacerlo”, construir, organizar y mejorar. Tu reto: escuchar antes de ejecutar y sumar más gente al plan.",
-        strengths:["Eres resolutivo/a","Organizas recursos","Cierras tareas"],
-        next:["Invita a alguien nuevo al equipo","Haz una prueba pequeña antes de escalar","Define roles simples en 1 minuto"],
-      },
-      {
-        id:"Quien Cuida al Grupo",
-        emoji:"💛",
-        tag:"Creas seguridad y pertenencia. Eso también es liderazgo.",
-        match: s => topKey(s)==="cuidado",
-        desc:"Tú detectas quién está fuera, quién se calla y quién se rompe. Tu reto: poner límites y pedir apoyo para no cargar con todo.",
-        strengths:["Empatía real","Generas confianza","Incluyes a otros"],
-        next:["Pon un límite: “hoy puedo hasta aquí”","Pide a otro que te ayude","Propón una rutina (buddy/check-in)"],
-      },
-      {
-        id:"Liderazgo con Energía",
-        emoji:"⚡",
-        tag:"Te mueves rápido y arrastras al grupo. Bien usado, es oro.",
-        match: s => topKey(s)==="lider",
-        desc:"Te sale tomar iniciativa, empujar y movilizar. Tu reto: frenar 10 segundos para escuchar y evitar “atropellar” a otros.",
-        strengths:["Inicias y motivas","Tomas decisiones","Sostienes el ritmo"],
-        next:["Pregunta: “¿Quién no ha hablado?”","Define 3 pasos y 1 responsable por paso","Elige 1 tema y sé constante"],
-      },
-      {
-        id:"Mente Estratégica",
-        emoji:"🔎",
-        tag:"Piensas con datos y cabeza. Tu fuerza es hacerlo inteligente.",
-        match: s => topKey(s)==="info",
-        desc:"Te gusta entender el tema, comprobar, investigar y mejorar la calidad. Tu reto: salir de la teoría y probar un paso pequeño.",
-        strengths:["Detectas fake news","Aportas claridad","Propones mejoras realistas"],
-        next:["Explica tus hallazgos en 60 segundos","Prueba 1 acción pequeña (piloto)","Enseña a otros a verificar fuentes"],
-      },
-    ];
-
-    /******************** APP ********************/
-    const surveyCard = document.getElementById("surveyCard");
-    const body = document.getElementById("body");
-    const resultCard = document.getElementById("resultCard");
-    const resultBody = document.getElementById("resultBody");
-
-    const qLabel = document.getElementById("qLabel");
-    const topicTag = document.getElementById("topicTag");
-    const fill = document.getElementById("fill");
-    const ptxt = document.getElementById("ptxt");
-
-    const state = {
-      idx: 0,
-      answers: Array(QUESTIONS.length).fill(null),
-      scores: Object.fromEntries(DIMENSIONS.map(d=>[d.key,0])),
+    const optionIcons = {
+      Voice: `
+        <div class="miniIco" style="background: rgba(124,92,255,.10)">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M4 12v3a4 4 0 0 0 4 4h3" stroke="rgba(124,92,255,1)" stroke-width="2" stroke-linecap="round"/>
+            <path d="M20 12V9a4 4 0 0 0-4-4h-3" stroke="rgba(124,92,255,1)" stroke-width="2" stroke-linecap="round"/>
+            <path d="M8 12h8" stroke="rgba(124,92,255,1)" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </div>
+      `,
+      Supporter: `
+        <div class="miniIco" style="background: rgba(255,90,165,.10)">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M12 21s-7-4.4-7-11a4 4 0 0 1 7-2 4 4 0 0 1 7 2c0 6.6-7 11-7 11z" stroke="rgba(255,90,165,1)" stroke-width="2"/>
+          </svg>
+        </div>
+      `,
+      Doer: `
+        <div class="miniIco" style="background: rgba(22,193,114,.10)">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M7 12l3 3 7-7" stroke="rgba(22,193,114,1)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      `,
+      Thinker: `
+        <div class="miniIco" style="background: rgba(0,194,255,.10)">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M12 18h.01" stroke="rgba(0,194,255,1)" stroke-width="3" stroke-linecap="round"/>
+            <path d="M9.5 9a2.5 2.5 0 1 1 3.5 2.3c-.9.4-1.5 1.1-1.5 2V14" stroke="rgba(0,194,255,1)" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </div>
+      `
     };
 
-    function clamp(n,min,max){ return Math.max(min, Math.min(max,n)); }
-
-    function topKey(scores){
-      const arr = Object.entries(scores).sort((a,b)=>b[1]-a[1]);
-      return arr[0][0];
-    }
-
-    function maxScore(){ return QUESTIONS.length * 2; }
-
-    function percent(scores, key){
-      const p = Math.round((scores[key] / maxScore()) * 100);
-      return clamp(p, 0, 100);
-    }
-
-    function iconSvg(name){ return ICONS[name] || ICONS.chat; }
-
-    function optColor(i){
-      const palette = ["var(--c)","var(--g)","var(--pk)","var(--p)"];
-      return palette[i % palette.length];
-    }
-
-    function render(){
-      const q = QUESTIONS[state.idx];
-      const total = QUESTIONS.length;
-      const cur = state.idx + 1;
-
-      qLabel.textContent = `Pregunta ${cur}`;
-      topicTag.textContent = q.topic;
-
-      ptxt.textContent = `${cur} / ${total}`;
-      const w = total === 1 ? 100 : Math.round((state.idx/(total-1))*100);
-      fill.style.width = `${w}%`;
-
-      const selected = state.answers[state.idx];
-
-      body.innerHTML = `
-        <h3 class="qTitle">${escapeHtml(q.title)}</h3>
-        <p class="qHint">${escapeHtml(q.hint || "")}</p>
-
-        <div class="grid" role="list">
-          ${q.options.map((o,i)=>`
-            <div class="opt" role="listitem" tabindex="0"
-                 data-i="${i}" data-selected="${selected===i}">
-              <div class="iconBox" style="color:${optColor(i)}">
-                ${iconSvg(o.icon)}
-              </div>
-              <div class="txt">
-                <strong>${escapeHtml(o.title)}</strong>
-                <span>${escapeHtml(o.desc)}</span>
-              </div>
-            </div>
-          `).join("")}
-        </div>
-
-        <div class="btnRow">
-          <button class="btn" id="back" ${state.idx===0 ? "disabled":""}>${arrowLeft()} Atrás</button>
-          <div style="display:flex;gap:10px;flex-wrap:wrap">
-            <button class="btn danger" id="reset">${resetIcon()} Reiniciar</button>
-            <button class="btn primary" id="next" ${selected===null ? "disabled":""}>
-              ${state.idx===total-1 ? "Ver perfil " + checkIcon() : "Siguiente " + arrowRight()}
-            </button>
-          </div>
-        </div>
-
-        <div class="small">Elige lo que más se parezca a ti <strong>hoy</strong>. Puedes cambiar con el tiempo.</div>
-      `;
-
-      body.querySelectorAll(".opt").forEach(el=>{
-        el.addEventListener("click", ()=> choose(+el.dataset.i));
-        el.addEventListener("keydown", (e)=>{
-          if(e.key==="Enter" || e.key===" "){ e.preventDefault(); choose(+el.dataset.i); }
-        });
-      });
-
-      document.getElementById("back").onclick = ()=> { if(state.idx>0){ state.idx--; render(); } };
-      document.getElementById("reset").onclick = ()=> resetAll();
-      document.getElementById("next").onclick = ()=> next();
-    }
-
-    function choose(i){
-      state.answers[state.idx] = i;
-      render();
-    }
-
-    function next(){
-      if(state.answers[state.idx] === null) return;
-      if(state.idx < QUESTIONS.length-1){
-        state.idx++;
-        render();
-      }else{
-        computeScores();
-        showResults();
-      }
-    }
-
-    function resetAll(){
-      state.idx = 0;
-      state.answers = Array(QUESTIONS.length).fill(null);
-      state.scores = Object.fromEntries(DIMENSIONS.map(d=>[d.key,0]));
-      resultCard.style.display = "none";
-      surveyCard.style.display = "block";
-      render();
-      window.scrollTo({top:0,behavior:"smooth"});
-    }
-
-    function computeScores(){
-      state.scores = Object.fromEntries(DIMENSIONS.map(d=>[d.key,0]));
-      state.answers.forEach((a,qi)=>{
-        const opt = QUESTIONS[qi].options[a];
-        if(!opt || !opt.pts) return;
-        for(const [k,v] of Object.entries(opt.pts)){
-          state.scores[k] = (state.scores[k] || 0) + v;
-        }
-      });
-    }
-
-    function pickProfile(){
-      const found = PROFILES.find(p=>p.match(state.scores));
-      return found || PROFILES[0];
-    }
-
-    function showResults(){
-      const p = pickProfile();
-      surveyCard.style.display = "none";
-      resultCard.style.display = "block";
-
-      const bars = DIMENSIONS.map(d=>{
-        const pct = percent(state.scores, d.key);
-        return `
-          <div class="row">
-            <div class="lbl">${escapeHtml(d.label)}</div>
-            <div class="mbar"><i style="width:${pct}%; background:${d.grad}"></i></div>
-            <div class="val">${pct}%</div>
-          </div>
-        `;
-      }).join("");
-
-      resultBody.innerHTML = `
-        <div class="results">
-          <div class="profile">
-            <div class="pTop">
-              <div class="avatar" aria-hidden="true"><div style="font-size:30px">${escapeHtml(p.emoji)}</div></div>
-              <div>
-                <h3 class="pTitle">${escapeHtml(p.id)}</h3>
-                <p class="pTag">${escapeHtml(p.tag)}</p>
-              </div>
-            </div>
-
-            <div class="pBody">${escapeHtml(p.desc)}</div>
-
-            <div class="chips" aria-label="Fortalezas">
-              ${p.strengths.map(s=>`<span class="cchip">⭐ ${escapeHtml(s)}</span>`).join("")}
-            </div>
-
-            <div class="chips" aria-label="Siguiente paso">
-              ${p.next.map(s=>`<span class="cchip">➡️ ${escapeHtml(s)}</span>`).join("")}
-            </div>
-
-            <div class="printRow">
-              <button class="btn primary" id="again">${resetIcon()} Repetir</button>
-              <button class="btn" id="print">${printIcon()} Imprimir / PDF</button>
-              <button class="btn" id="copy">${copyIcon()} Copiar perfil</button>
-            </div>
-
-            <div class="small">Esto no es una etiqueta fija: es una “foto” de tu estilo hoy. Puedes entrenar otras habilidades.</div>
-          </div>
-
-          <div class="meters">
-            <h4>Tu mezcla de habilidades</h4>
-            <div class="rows">${bars}</div>
-            <div class="small">Pista para debate: ¿qué habilidad te gustaría subir este trimestre?</div>
-          </div>
-        </div>
-      `;
-
-      document.getElementById("again").onclick = ()=> resetAll();
-      document.getElementById("print").onclick = ()=> window.print();
-      document.getElementById("copy").onclick = ()=> copyProfile(p);
-
-      window.scrollTo({top:0,behavior:"smooth"});
-    }
-
-    async function copyProfile(p){
-      const text = [
-        `Mi perfil: ${p.id}`,
-        p.tag,
-        "",
-        p.desc,
-        "",
-        "Fortalezas: " + p.strengths.join(", "),
-        "Siguiente paso: " + p.next.join(" | ")
-      ].join("\n");
-
-      try{
-        await navigator.clipboard.writeText(text);
-        alert("Copiado. Pégalo en Classroom o en tu cuaderno.");
-      }catch(e){
-        const ta = document.createElement("textarea");
-        ta.value = text;
-        document.body.appendChild(ta);
-        ta.select();
-        document.execCommand("copy");
-        ta.remove();
-        alert("Copiado. Pégalo en Classroom o en tu cuaderno.");
-      }
-    }
-
-    // tiny svg helpers
-    function arrowLeft(){ return `<svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`; }
-    function arrowRight(){ return `<svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`; }
-    function checkIcon(){ return `<svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`; }
-    function resetIcon(){ return `<svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M3 12a9 9 0 1 0 3-6.7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M3 4v6h6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`; }
-    function printIcon(){ return `<svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M6 9V3h12v6" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M6 14h12v7H6v-7Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>`; }
-    function copyIcon(){ return `<svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M9 9h10v10H9V9Z" stroke="currentColor" stroke-width="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`; }
-
-    // start
-    render();
-  </script>
-</body>
-</html>
+    const profiles = {
+      Voice: {
+        name: "The Voice",
+        tag: "You start conversations and help people speak up in a respectful way.",
+        strengths: ["Brave communicator", "Confident sharing ideas", "Raises awareness"],
+        helpsBy: ["Presenting ideas", "Leading discussions", "Encouraging others to speak"],
+        classroom: "Best in roles
